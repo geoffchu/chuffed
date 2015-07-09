@@ -1,0 +1,7 @@
+Compile using:
+
+make
+
+Flatzinc solver is invoked using:
+
+fzn_chuffed file.fzn

@@ -1,4 +1,4 @@
-#include "core/propagator.h"
+#include <chuffed/core/propagator.h>
 #include <list>
 #include <queue>
 #include <set>
@@ -6,7 +6,7 @@
 
 using namespace std;
 
-	// Time Decomposition of the cumulative constraint
+// Time Decomposition of the cumulative constraint
 void timed_cumulative(vec<IntVar*>& s, vec<int>& d, vec<int>& r, int b) {
 	assert(s.size() == d.size() && s.size() == r.size());
 	int min = INT_MAX;

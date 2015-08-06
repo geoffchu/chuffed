@@ -1,10 +1,10 @@
 #include <vector>
 // #include "Vec.h"
-#include "core/propagator.h"
-#include "globals/mddglobals.h"
+#include <chuffed/core/propagator.h>
+#include <chuffed/globals/mddglobals.h>
 
-#include "mdd/MDD.h"
-#include "mdd/mdd_prop.h"
+#include <chuffed/mdd/MDD.h>
+#include <chuffed/mdd/mdd_prop.h>
 
 typedef struct {
     int state;

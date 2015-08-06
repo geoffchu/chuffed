@@ -11,6 +11,8 @@ cd ..
 mkdir build
 cd build
 cmake -DCMAKE_INSTALL_PREFIX:PATH=/path/to/chuffed-install ..
+make 
+make install
 
 make:
 This will compile the solver, but not create a library. Simply

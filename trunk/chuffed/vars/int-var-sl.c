@@ -1,6 +1,6 @@
-#include "vars/int-var.h"
-#include "core/sat.h"
-#include "core/propagator.h"
+#include <chuffed/vars/int-var.h>
+#include <chuffed/core/sat.h>
+#include <chuffed/core/propagator.h>
 
 IntVarSL::IntVarSL(const IntVar& other, vec<int>& _values)
 	: IntVar(other), values(_values) {

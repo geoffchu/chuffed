@@ -1,5 +1,5 @@
-#include "vars/bool-view.h"
-#include "core/propagator.h"
+#include <chuffed/vars/bool-view.h>
+#include <chuffed/core/propagator.h>
 
 void BoolView::attach(Propagator *p, int pos, int eflags) {
 	WatchElem we(p->prop_id, pos);

@@ -1,4 +1,4 @@
-#include "core/propagator.h"
+#include <chuffed/core/propagator.h>
 
 void output_var(Branching *v) {
 	engine.outputs.push(v);

@@ -1,6 +1,6 @@
-#include "support/misc.h"
-#include "mip/simplex.h"
-#include "mip/mip.h"
+#include <chuffed/support/misc.h>
+#include <chuffed/mip/simplex.h>
+#include <chuffed/mip/mip.h>
 
 #define REFACTOR_FREQ 100
 #define AVOID_SMALL_PIVOT 0

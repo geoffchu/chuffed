@@ -1,9 +1,9 @@
 #ifndef modelling_h
 #define modelling_h
 
-#include "support/misc.h"
-#include "vars/int-var.h"
-#include "vars/bool-view.h"
+#include <chuffed/support/misc.h>
+#include <chuffed/vars/int-var.h>
+#include <chuffed/vars/bool-view.h>
 
 void createVar(IntVar*& x, int min, int max, bool el = false);
 void createVars(vec<IntVar*>& x, int n, int min, int max, bool el = false);

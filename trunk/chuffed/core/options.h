@@ -3,7 +3,7 @@
 
 #include <cstdlib>
 #include <cstring>
-#include "support/misc.h"
+#include <chuffed/support/misc.h>
 
 // When enabled, there is a command-line option -phase_saving=n, defaults to
 // 0=none (1=some, 2=always, behaviour is exactly the same as MiniSat 2.2.0).

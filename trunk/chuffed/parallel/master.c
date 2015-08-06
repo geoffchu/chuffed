@@ -1,9 +1,9 @@
 #include <ctime>
 #include <cstring>
-#include "core/options.h"
-#include "core/engine.h"
-#include "core/sat.h"
-#include "parallel/parallel.h"
+#include <chuffed/core/options.h>
+#include <chuffed/core/engine.h>
+#include <chuffed/core/sat.h>
+#include <chuffed/parallel/parallel.h>
 
 Master master;
 

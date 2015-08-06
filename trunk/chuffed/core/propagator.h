@@ -21,10 +21,10 @@ Assumptions:
 #include <climits>
 #include <new>
 #include <algorithm>
-#include "support/misc.h"
-#include "core/engine.h"
-#include "core/sat-types.h"
-#include "core/sat.h"
+#include <chuffed/support/misc.h>
+#include <chuffed/core/engine.h>
+#include <chuffed/core/sat-types.h>
+#include <chuffed/core/sat.h>
 //#include "core/prop-group.h"
 
 enum ConLevel { CL_DEF, CL_VAL, CL_BND, CL_DOM };

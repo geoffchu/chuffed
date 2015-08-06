@@ -1,6 +1,6 @@
-#include "ldsb/ldsb.h"
-#include "core/propagator.h"
-#include "core/sat.h"
+#include <chuffed/ldsb/ldsb.h>
+#include <chuffed/core/propagator.h>
+#include <chuffed/core/sat.h>
 
 #define LDSB_DEBUG 0
 

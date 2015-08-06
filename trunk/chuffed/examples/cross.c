@@ -1,10 +1,10 @@
 #include <cstdio>
 #include <cassert>
 #include <iostream>
-#include "core/engine.h"
-#include "core/propagator.h"
-#include "branching/branching.h"
-#include "globals/mddglobals.h"
+#include <chuffed/core/engine.h>
+#include <core/propagator.h>
+#include <branching/branching.h>
+#include <globals/mddglobals.h>
 
 
 static void skipComments(std::istream& i)

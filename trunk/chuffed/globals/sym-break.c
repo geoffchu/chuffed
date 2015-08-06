@@ -1,5 +1,5 @@
-#include "core/propagator.h"
-#include "vars/modelling.h"
+#include <chuffed/core/propagator.h>
+#include <chuffed/vars/modelling.h>
 
 void var_sym_break(vec<IntVar*>& x) {
 	for (int i = 0; i < x.size()-1; i++) {

@@ -20,11 +20,11 @@
  *
  */
 
-#include "flatzinc/flatzinc.h"
-#include "core/engine.h"
-#include "core/propagator.h"
-#include "ldsb/ldsb.h"
-#include "globals/mddglobals.h"
+#include <chuffed/flatzinc/flatzinc.h>
+#include <chuffed/core/engine.h>
+#include <chuffed/core/propagator.h>
+#include <chuffed/ldsb/ldsb.h>
+#include <chuffed/globals/mddglobals.h>
 
 namespace FlatZinc {
 

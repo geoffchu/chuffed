@@ -1,10 +1,10 @@
 #include <ctime>
 #include <cstring>
-#include "core/options.h"
-#include "core/engine.h"
-#include "core/sat.h"
-#include "vars/int-var.h"
-#include "parallel/parallel.h"
+#include <chuffed/core/options.h>
+#include <chuffed/core/engine.h>
+#include <chuffed/core/sat.h>
+#include <chuffed/vars/int-var.h>
+#include <chuffed/parallel/parallel.h>
 
 Slave slave;
 

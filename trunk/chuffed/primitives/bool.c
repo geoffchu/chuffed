@@ -1,4 +1,4 @@
-#include "core/propagator.h"
+#include <chuffed/core/propagator.h>
 
 void bool_rel(BoolView x, BoolRelType t, BoolView y, BoolView z) {
 //	NOT_SUPPORTED;

@@ -1,6 +1,6 @@
 #include <map>
 #include <utility>
-#include "core/propagator.h"
+#include <chuffed/core/propagator.h>
 
 #define DEBUG 0
 #define PREPROCESS 1

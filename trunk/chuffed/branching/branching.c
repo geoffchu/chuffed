@@ -1,7 +1,7 @@
-#include "branching/branching.h"
-#include "vars/vars.h"
-#include "core/engine.h"
-#include "core/options.h"
+#include <chuffed/branching/branching.h>
+#include <chuffed/vars/vars.h>
+#include <chuffed/core/engine.h>
+#include <chuffed/core/options.h>
 
 BranchGroup::BranchGroup(VarBranch vb, bool t) :
 	var_branch(vb), terminal(t), fin(0), cur(-1) {}

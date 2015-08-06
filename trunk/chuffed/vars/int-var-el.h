@@ -1,7 +1,7 @@
 #ifndef int_var_el_h
 #define int_var_el_h
 
-#include "core/options.h"
+#include <chuffed/core/options.h>
 
 class IntVarEL : public IntVar {
 	int lit_min;

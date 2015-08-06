@@ -1,8 +1,8 @@
 #include <cstdio>
 #include <cstring>
-#include "core/options.h"
-#include "core/engine.h"
-#include "flatzinc/flatzinc.h"
+#include <chuffed/core/options.h>
+#include <chuffed/core/engine.h>
+#include <chuffed/flatzinc/flatzinc.h>
 
 int main(int argc, char** argv) {
 	parseOptions(argc, argv);

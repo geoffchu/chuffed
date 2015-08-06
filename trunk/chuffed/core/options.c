@@ -1,7 +1,7 @@
 
-#include "core/options.h"
-#include "core/engine.h"
-#include "core/sat.h"
+#include <chuffed/core/options.h>
+#include <chuffed/core/engine.h>
+#include <chuffed/core/sat.h>
 
 Options so;
 

@@ -1,5 +1,5 @@
-#include "support/misc.h"
-#include "mip/simplex.h"
+#include <chuffed/support/misc.h>
+#include <chuffed/mip/simplex.h>
 #include <algorithm>
 
 

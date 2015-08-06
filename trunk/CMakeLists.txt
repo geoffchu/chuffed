@@ -1,15 +1,15 @@
 cmake_minimum_required (VERSION 2.8.7)
 
 if (USE_STDLIBCPP)
-  set(MZN_LIBCPP libstdc++)
+  set(LIBCPP libstdc++)
 else()
-  set(MZN_LIBCPP libc++)
+  set(LIBCPP libc++)
 endif()
 
 if(APPLE)
    SET(CMAKE_OSX_DEPLOYMENT_TARGET "10.7")
    set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++0x")
-   set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "${MZN_LIBCPP}")
+   set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "${LIBCPP}")
 endif(APPLE)
 
 project (chuffed CXX)
@@ -20,6 +20,7 @@ set (chuffed_VERSION_MINOR 9)
 set (chuffed_VERSION_PATCH 0)
 
 include_directories("chuffed")
+include_directories(".")
 
 SET_SOURCE_FILES_PROPERTIES(
 chuffed/vars/int-var.c

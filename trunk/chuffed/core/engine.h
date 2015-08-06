@@ -1,7 +1,7 @@
 #ifndef engine_h
 #define engine_h
 
-#include "support/misc.h"
+#include <chuffed/support/misc.h>
 
 #define DEBUG 0
 

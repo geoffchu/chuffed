@@ -1,5 +1,5 @@
-#include "core/propagator.h"
-#include "mip/mip.h"
+#include <chuffed/core/propagator.h>
+#include <chuffed/mip/mip.h>
 
 // x >= y <- r
 

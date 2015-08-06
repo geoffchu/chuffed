@@ -8,7 +8,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 #include <stdint.h>
-#include "support/vec.h"
+#include <chuffed/support/vec.h>
 
 extern uint64_t bit[65];
 

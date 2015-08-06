@@ -3,8 +3,8 @@
 
 #include <map>
 #include <set>
-#include "core/propagator.h"
-#include "support/misc.h"
+#include <chuffed/core/propagator.h>
+#include <chuffed/support/misc.h>
 
 using namespace std;
 

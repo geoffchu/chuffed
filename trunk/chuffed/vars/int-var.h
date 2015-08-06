@@ -3,11 +3,11 @@
 
 #include <new>
 #include <stdint.h>
-#include "support/misc.h"
-#include "core/sat-types.h"
-#include "core/engine.h"
-#include "vars/vars.h"
-#include "vars/bool-view.h"
+#include <chuffed/support/misc.h>
+#include <chuffed/core/sat-types.h>
+#include <chuffed/core/engine.h>
+#include <chuffed/vars/vars.h>
+#include <chuffed/vars/bool-view.h>
 
 #define INT64_MAX 9223372036854775807LL
 #define INT64_MIN (-INT64_MAX-1)
@@ -344,8 +344,8 @@ inline void IntVar::print() {
 }
 
 
-#include "vars/int-var-el.h"
-#include "vars/int-var-ll.h"
-#include "vars/int-var-sl.h"
+#include <chuffed/vars/int-var-el.h>
+#include <chuffed/vars/int-var-ll.h>
+#include <chuffed/vars/int-var-sl.h>
 
 #endif

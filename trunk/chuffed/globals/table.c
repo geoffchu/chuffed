@@ -1,4 +1,4 @@
-#include "core/propagator.h"
+#include <chuffed/core/propagator.h>
 
 class TableChecker : public Checker {
 	vec<IntVar*> x;

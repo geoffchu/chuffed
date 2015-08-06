@@ -30,9 +30,9 @@
 #include <ostream>
 #include <algorithm>
 
-#include "support/vec.h"
-#include "core/propagator.h"
-#include "flatzinc/ast.h"
+#include <chuffed/support/vec.h>
+#include <chuffed/core/propagator.h>
+#include <chuffed/flatzinc/ast.h>
 
 // Controls whether expressions like bool_sum_eq([x[i] = j | i in 1..n], 1)
 // access the underlying literals x[i] = j or new ones via int_eq_reif(...)

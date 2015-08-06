@@ -1,7 +1,7 @@
 #ifndef globals_h
 #define globals_h
 
-#include "core/propagator.h"
+#include <chuffed/core/propagator.h>
 
 //-----
 // Directives

@@ -30,8 +30,8 @@
 #include <fstream>
 #include <sstream>
 
-#include "flatzinc/flatzinc.h"
-#include "flatzinc/parser.tab.h"
+#include <chuffed/flatzinc/flatzinc.h>
+#include <chuffed/flatzinc/parser.tab.h>
 
 #ifdef HAVE_MMAP
 #include <stdio.h>

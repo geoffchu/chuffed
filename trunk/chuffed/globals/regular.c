@@ -1,4 +1,4 @@
-#include "core/propagator.h"
+#include <chuffed/core/propagator.h>
 
 void regular_check(vec<IntVar*>& x, int q, int s, vec<vec<int> >& d, int q0, vec<int>& f) {
 	assert(q >= 1);

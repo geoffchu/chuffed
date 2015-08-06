@@ -16,7 +16,7 @@
 
 #include <vector>
 
-#include "support/vec.h"
+#include <chuffed/support/vec.h>
 
 typedef unsigned int MDD;
 // MDD node format: var dest_0 dest_1 dest_2 ... dest_{dom-1}

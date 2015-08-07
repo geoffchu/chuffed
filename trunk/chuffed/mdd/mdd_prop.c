@@ -1,4 +1,4 @@
-#include "mdd_prop.h"
+#include <chuffed/mdd/mdd_prop.h>
 
 #include <iostream>
 #include <cstring>

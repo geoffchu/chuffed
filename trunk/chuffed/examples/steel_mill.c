@@ -1,9 +1,9 @@
 #include <cstdio>
 #include <cassert>
-#include "core/engine.h"
-#include "core/propagator.h"
-#include "branching/branching.h"
-#include "vars/modelling.h"
+#include <chuffed/core/engine.h>
+#include <chuffed/core/propagator.h>
+#include <chuffed/branching/branching.h>
+#include <chuffed/vars/modelling.h>
 
 int csplib_capacities[] =
   {12, 14, 17, 18, 19,

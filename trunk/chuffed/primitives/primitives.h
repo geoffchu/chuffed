@@ -55,7 +55,7 @@ enum BoolRelType {
 };
 
 
-#include "core/propagator.h"
+#include <chuffed/core/propagator.h>
 
 // bool.c
 

@@ -1,6 +1,6 @@
 #include <map>
-#include "vars/int-var.h"
-#include "mip/mip.h"
+#include <chuffed/vars/int-var.h>
+#include <chuffed/mip/mip.h>
 
 // When set, branch variable (first_fail) and value (indomain_median,
 // indomain_split, indomain_reverse_split) specifications will count domain

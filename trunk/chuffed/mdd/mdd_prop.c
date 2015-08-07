@@ -1,14 +1,14 @@
-#include "mdd_prop.h"
+#include <chuffed/mdd/mdd_prop.h>
 
 #include <iostream>
 #include <cstring>
 #include <climits>
 
-#include "support/misc.h"
+#include <chuffed/support/misc.h>
 
-#include "MDD.h"
+#include <chuffed/mdd/MDD.h>
 
-#include "opts.h"
+#include <chuffed/mdd/opts.h>
 
 // #define TIKZDEBUG
 

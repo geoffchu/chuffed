@@ -1,7 +1,7 @@
 #ifndef __MDDGLOBALS_H__
 #define __MDDGLOBALS_H__
 
-#include "support/vec.h"
+#include <chuffed/support/vec.h>
 
 void mdd_table(vec<IntVar*>& x, vec<vec<int> >& t);
 

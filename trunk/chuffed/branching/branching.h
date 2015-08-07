@@ -4,8 +4,8 @@
 #include <cstdio>
 #include <cassert>
 #include <climits>
-#include "support/misc.h"
-#include "core/engine.h"
+#include <chuffed/support/misc.h>
+#include <chuffed/core/engine.h>
 
 //-----
 

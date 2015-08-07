@@ -1,8 +1,8 @@
 #ifndef bool_view_h
 #define bool_view_h
 
-#include "vars/vars.h"
-#include "core/sat.h"
+#include <chuffed/vars/vars.h>
+#include <chuffed/core/sat.h>
 
 class Propagator;
 

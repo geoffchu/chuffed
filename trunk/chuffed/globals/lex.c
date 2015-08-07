@@ -1,4 +1,4 @@
-#include "core/propagator.h"
+#include <chuffed/core/propagator.h>
 
 void newBinGE(IntView<> x, IntView<> y, BoolView r);
 void newBinNE(IntView<> x, IntView<> y, BoolView r);

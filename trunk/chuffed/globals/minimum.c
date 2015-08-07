@@ -1,4 +1,4 @@
-#include "core/propagator.h"
+#include <chuffed/core/propagator.h>
 
 // y = min(x_i)
 // Bounds propagator, not fully consistent

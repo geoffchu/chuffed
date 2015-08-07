@@ -1,5 +1,5 @@
 #include <map>
-#include "core/propagator.h"
+#include <chuffed/core/propagator.h>
 
 // y = a[x-offset]
 

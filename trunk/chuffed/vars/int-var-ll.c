@@ -1,5 +1,5 @@
-#include "vars/int-var.h"
-#include "core/sat.h"
+#include <chuffed/vars/int-var.h>
+#include <chuffed/core/sat.h>
 
 // val -> (val-1)/2
 

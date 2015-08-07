@@ -1,7 +1,7 @@
 #ifndef int_var_sl_h
 #define int_var_sl_h
 
-#include "core/options.h"
+#include <chuffed/core/options.h>
 
 class IntVarSL : public IntVar {
 	vec<int> values;          // values that the var can take in ascending order

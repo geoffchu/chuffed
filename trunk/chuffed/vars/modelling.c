@@ -1,4 +1,4 @@
-#include "vars/modelling.h"
+#include <chuffed/vars/modelling.h>
 
 void createVar(IntVar*& x, int min, int max, bool el) {
 	x = newIntVar(min, max);

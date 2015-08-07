@@ -2,8 +2,8 @@
 #define int_view_h
 
 #include <cassert>
-#include "core/sat-types.h"
-#include "core/sat.h"
+#include <chuffed/core/sat-types.h>
+#include <chuffed/core/sat.h>
 
 // y = (-1)a*x + b
 

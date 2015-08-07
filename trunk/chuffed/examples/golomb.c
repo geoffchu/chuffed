@@ -1,9 +1,9 @@
 #include <cstdio>
 #include <cassert>
-#include "core/engine.h"
-#include "core/propagator.h"
-#include "branching/branching.h"
-#include "vars/modelling.h"
+#include <chuffed/core/engine.h>
+#include <chuffed/core/propagator.h>
+#include <chuffed/branching/branching.h>
+#include <chuffed/vars/modelling.h>
 
 static const int length[] = {0,0,1,3,6,11,17,25,34,44,55,72,85,106,127};
 

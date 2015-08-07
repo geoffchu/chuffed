@@ -4,10 +4,10 @@
 #include <climits>
 #include <cmath>
 #include <map>
-#include "support/misc.h"
-#include "support/heap.h"
-#include "core/sat-types.h"
-#include "branching/branching.h"
+#include <chuffed/support/misc.h>
+#include <chuffed/support/heap.h>
+#include <chuffed/core/sat-types.h>
+#include <chuffed/branching/branching.h>
 
 #define TEMP_SC_LEN 1024
 #define MAX_SHARE_LEN 512

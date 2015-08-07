@@ -1,5 +1,5 @@
-#include "mip/mip.h"
-#include "mip/simplex.h"
+#include <chuffed/mip/mip.h>
+#include <chuffed/mip/simplex.h>
 
 #define MIP_DEBUG 0
 #define RC_BOUNDS 1

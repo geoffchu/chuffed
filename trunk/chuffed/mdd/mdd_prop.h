@@ -3,15 +3,15 @@
 
 #include <utility>
 
-#include "core/propagator.h"
-#include "vars/int-view.h"
-#include "support/misc.h"
-#include "support/sparse_set.h"
+#include <chuffed/core/propagator.h>
+#include <chuffed/vars/int-view.h>
+#include <chuffed/support/misc.h>
+#include <chuffed/support/sparse_set.h>
 #include <climits>
 
-#include "mdd/opts.h"
+#include <chuffed/mdd/opts.h>
 
-#include "mdd/MDD.h"
+#include <chuffed/mdd/MDD.h>
 
 #ifdef FULLPROP
 #undef USE_WATCHES

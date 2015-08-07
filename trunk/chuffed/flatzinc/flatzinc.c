@@ -20,10 +20,10 @@
  *
  */
 
-#include "support/vec.h"
-#include "flatzinc/flatzinc.h"
-#include "core/engine.h"
-#include "branching/branching.h"
+#include <chuffed/support/vec.h>
+#include <chuffed/flatzinc/flatzinc.h>
+#include <chuffed/core/engine.h>
+#include <chuffed/branching/branching.h>
 
 
 using namespace std;

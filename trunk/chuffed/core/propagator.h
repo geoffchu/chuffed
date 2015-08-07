@@ -21,10 +21,10 @@ Assumptions:
 #include <climits>
 #include <new>
 #include <algorithm>
-#include "support/misc.h"
-#include "core/engine.h"
-#include "core/sat-types.h"
-#include "core/sat.h"
+#include <chuffed/support/misc.h>
+#include <chuffed/core/engine.h>
+#include <chuffed/core/sat-types.h>
+#include <chuffed/core/sat.h>
 //#include "core/prop-group.h"
 
 enum ConLevel { CL_DEF, CL_VAL, CL_BND, CL_DOM };
@@ -138,12 +138,12 @@ static inline Clause* Reason_new(vec<Lit>& ps) {
 
 
 
-#include "vars/bool-view.h"
-#include "vars/int-var.h"
-#include "vars/int-view.h"
+#include <chuffed/vars/bool-view.h>
+#include <chuffed/vars/int-var.h>
+#include <chuffed/vars/int-view.h>
 
-#include "primitives/primitives.h"
-#include "globals/globals.h"
+#include <chuffed/primitives/primitives.h>
+#include <chuffed/globals/globals.h>
 
 
 #endif

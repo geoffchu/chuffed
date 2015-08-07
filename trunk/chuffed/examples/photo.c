@@ -1,10 +1,10 @@
 #include <cstdio>
 #include <cassert>
 #include <cmath>
-#include "core/engine.h"
-#include "core/propagator.h"
-#include "branching/branching.h"
-#include "vars/modelling.h"
+#include <chuffed/core/engine.h>
+#include <chuffed/core/propagator.h>
+#include <chuffed/branching/branching.h>
+#include <chuffed/vars/modelling.h>
 
 class Photo : public Problem {
 public:

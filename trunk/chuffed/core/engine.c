@@ -1,13 +1,13 @@
 #include <cstdio>
 #include <cassert>
-#include "core/options.h"
-#include "core/engine.h"
-#include "core/sat.h"
-#include "core/propagator.h"
-#include "branching/branching.h"
-#include "mip/mip.h"
-#include "parallel/parallel.h"
-#include "ldsb/ldsb.h"
+#include <chuffed/core/options.h>
+#include <chuffed/core/engine.h>
+#include <chuffed/core/sat.h>
+#include <chuffed/core/propagator.h>
+#include <chuffed/branching/branching.h>
+#include <chuffed/mip/mip.h>
+#include <chuffed/parallel/parallel.h>
+#include <chuffed/ldsb/ldsb.h>
 
 Engine engine;
 

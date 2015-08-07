@@ -6,10 +6,10 @@
 
 #include <utility>
 
-#include "core/engine.h"
-#include "core/propagator.h"
-#include "branching/branching.h"
-#include "globals/mddglobals.h"
+#include <chuffed/core/engine.h>
+#include <chuffed/core/propagator.h>
+#include <chuffed/branching/branching.h>
+#include <chuffed/globals/mddglobals.h>
 
 // Nonograms
 static void nonogram(vec<IntVar*>& x, vec<int>& blocks);

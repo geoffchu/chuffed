@@ -1,5 +1,5 @@
-#include "core/propagator.h"
-#include "mip/mip.h"
+#include <chuffed/core/propagator.h>
+#include <chuffed/mip/mip.h>
 
 // sum x_i >= c <- r
 // Only use scale and minus views. Absorb offsets into c.

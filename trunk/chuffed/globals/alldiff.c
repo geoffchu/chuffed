@@ -1,5 +1,5 @@
 //#include <stdio.h>
-#include "core/propagator.h"
+#include <chuffed/core/propagator.h>
 
 // AllDiff for mapping n vars to n values
 // x[i] != x[j] for all i, j

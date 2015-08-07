@@ -11,7 +11,7 @@
 #include <cassert>
 #include <climits>
 #include <iostream>
-#include "MDD.h"
+#include <chuffed/mdd/MDD.h>
 
 // static int collisions;
 

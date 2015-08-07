@@ -1,4 +1,4 @@
-#include "core/propagator.h"
+#include <chuffed/core/propagator.h>
 //#include "globals/alldiffbase.h"
 
 bool circuitSCC(int sz, IntVar ** a) {

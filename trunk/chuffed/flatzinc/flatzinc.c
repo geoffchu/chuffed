@@ -46,7 +46,7 @@ namespace FlatZinc {
 			if (s->id == "max_regret") return VAR_REGRET_MIN_MAX;
 			if (s->id == "random") return VAR_RANDOM;
 		}
-		std::cerr << "Warning, ignored search annotation: ";
+		std::cerr << "% Warning, ignored search annotation: ";
 		ann->print(std::cerr);
 		std::cerr << std::endl;
 		return VAR_INORDER;
@@ -64,7 +64,7 @@ namespace FlatZinc {
 			if (s->id == "indomain_reverse_split") return VAL_SPLIT_MAX;
 			if (s->id == "indomain_random") return VAL_RANDOM;
 		}
-		std::cerr << "Warning, ignored search annotation: ";
+		std::cerr << "% Warning, ignored search annotation: ";
 		ann->print(std::cerr);
 		std::cerr << std::endl;
 		return VAL_DEFAULT;
@@ -216,7 +216,7 @@ namespace FlatZinc {
 						hadSearchAnnotation = true;
 					} catch (AST::TypeError& e) {
 						(void) e;
-						fprintf(stderr, "Type error in search annotation. Ignoring!\n");
+						fprintf(stderr, "% Type error in search annotation. Ignoring!\n");
 					}
 				}
 			}
@@ -366,9 +366,9 @@ namespace FlatZinc {
 					BoolView b = bv[aia->a[0]->getBoolVar()];
 					if (b.isTrue()) printElem(aia->a[1]);
 					else if (b.isFalse()) printElem(aia->a[2]);
-					else std::cerr << "Error: Condition not fixed." << std::endl;
+					else std::cerr << "% Error: Condition not fixed." << std::endl;
 				} else {
-					std::cerr << "Error: Condition not Boolean." << std::endl;        
+					std::cerr << "% Error: Condition not Boolean." << std::endl;        
 				}
 			} else {
 				printElem(ai);

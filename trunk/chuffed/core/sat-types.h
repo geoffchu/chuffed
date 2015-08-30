@@ -95,12 +95,6 @@ public:
 	}
 
 	// -- use this function instead:
-	template<class V>
-	friend Clause* Clause_new(const V& ps, bool learnt = false) {
-		int mem_size = sizeof(Clause) + ps.size() * sizeof(Lit) + (learnt ? 1 : 0) * sizeof(int);
-		void* mem = malloc(mem_size);
-		return new (mem) Clause(ps, learnt); }
-
 	void         clearFlags  ()              { *((char*) this) = 0; }
 	int          size        ()      const   { return sz; }
 
@@ -111,6 +105,14 @@ public:
 	float&       activity    ()              { return data2[sz]; }
 
 };
+
+template<class V>
+static Clause* Clause_new(const V& ps, bool learnt = false) {
+	int mem_size = sizeof(Clause) + ps.size() * sizeof(Lit) + (learnt ? 1 : 0) * sizeof(int);
+	void* mem = malloc(mem_size);
+	return new (mem) Clause(ps, learnt); }
+
+
 
 //=================================================================================================
 // LitFlags -- store info concerning literal:

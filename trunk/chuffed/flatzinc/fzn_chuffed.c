@@ -20,6 +20,7 @@ int main(int argc, char** argv) {
 "
 -toggle_vsids=true|false
 -branch_random=true|false
+-switch_to_vsids_after=n
 -sat_polarity=n
 "
 -prop_fifo=true|false

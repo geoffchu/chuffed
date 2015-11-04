@@ -15,6 +15,7 @@ Options::Options() :
 
 	, toggle_vsids(false)
 	, branch_random(false)
+	, switch_to_vsids_after(1000000000)
 	, sat_polarity(0)
 
 	, prop_fifo(false)
@@ -101,6 +102,7 @@ void parseOptions(int& argc, char**& argv) {
 
 		parseBoolArg(toggle_vsids)
 		parseBoolArg(branch_random)
+		parseIntArg(switch_to_vsids_after)
 		parseIntArg(sat_polarity)
 
 		parseBoolArg(prop_fifo)

@@ -255,6 +255,12 @@ RESULT Engine::search() {
 				makeDecision(di, 1);
 			}
 
+            if (!so.vsids && !so.toggle_vsids &&  conflictC >= so.switch_to_vsids_after) {
+	    	if (so.restart_base >= 1000000000) so.restart_base = 100;
+                sat.btToLevel(0);
+                toggleVSIDS();
+            }
+
 		} else {
 
 			if (conflictC >= nof_conflicts) {

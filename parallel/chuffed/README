@@ -1,0 +1,23 @@
+Compile using:
+
+cmake:
+This will compile chuffed and create a library in an external directory
+that you can then use within other software. 
+First, create a directory "build" in trunk/, and enter that directory
+to call cmake with a prefix that sets the installation directory (this
+directory does not have to exist already). Enter the following commands 
+in your shell in the current directory to do all that:
+cd ..
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/path/to/chuffed-install ..
+make 
+make install
+
+make:
+This will compile the solver, but not create a library. Simply
+evoke make in the current directory.
+
+Flatzinc solver is invoked using:
+
+fzn_chuffed file.fzn

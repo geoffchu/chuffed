@@ -1,0 +1,35 @@
+/////////////////////////////////////////////////////////////////
+// Compilation						       //
+/////////////////////////////////////////////////////////////////
+
+// To compile the parallel version: 
+// Set parallel flag in parallel/chuffed/core/options.h: 
+#define PARALLEL
+
+// Create new build directory
+mkdir par_build
+cd par_build
+// Run cmake and set correct mpi compiler
+cmake -DCMAKE_CXX_COMPILER=mpicxx ../parallel 
+// Run make
+make
+
+
+/////////////////////////////////////////////////////////////////
+// Running the solver					       //
+/////////////////////////////////////////////////////////////////
+// The parameter "-parallel=true" is mandatory, 
+// and the parameter "-f" is highly recommended. 
+mpirun -np 8 ./fzn_chuffed -parallel=true -f <flatzinc-file>
+
+
+// Possible options: 
+
+// Guesses on objective value: 
+-greedyInit=true
+
+// Just run the portfolio version
+-purePortfolio=true
+
+// Mix work stealing and portfolio solving: 
+-mixWS_Portfolio=true

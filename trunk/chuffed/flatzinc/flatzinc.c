@@ -216,13 +216,13 @@ namespace FlatZinc {
 						hadSearchAnnotation = true;
 					} catch (AST::TypeError& e) {
 						(void) e;
-						fprintf(stderr, "% Type error in search annotation. Ignoring!\n");
+						fprintf(stderr, "%% Type error in search annotation. Ignoring!\n");
 					}
 				}
 			}
 		} 
 		if (!hadSearchAnnotation) {
-			fprintf(stderr, "% No search annotation given. Defaulting to VSIDS!\n");
+			fprintf(stderr, "%% No search annotation given. Defaulting to VSIDS!\n");
 			if (!so.vsids) {
 				so.vsids = true;
 				engine.branching->add(&sat);

@@ -74,6 +74,8 @@ public:
 	// Print meaning of literal
 	virtual void printLit(int v, bool sign) { NEVER; }
 
+	// Print statistics
+	virtual void printStats() {}
 
 };
 

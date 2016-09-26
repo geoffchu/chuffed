@@ -120,7 +120,8 @@ static void nonogram(vec<IntVar*>& x, vec<int>& blocks)
     if( so.mdd )
     {
 //        mdd_regular(x, dfa.size()+1, 2, dfa, 1, accepts);
-        mdd_regular(x, dfa.size(), 2, dfa, 1, accepts);
+        MDDOpts mopts;
+        mdd_regular(x, dfa.size(), 2, dfa, 1, accepts, true, mopts);
     } else {
 //        regular(x, dfa.size()+1, 2, dfa, 1, accepts);
         regular(x, dfa.size(), 2, dfa, 1, accepts);

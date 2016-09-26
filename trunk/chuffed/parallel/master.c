@@ -151,7 +151,7 @@ void Master::receiveReport() {
 	}
 
 	if (num_free_slaves == num_threads && job_queue.size() == 0 && status != RES_GUN) {
-		for (int i = 0; i < search_progress.size(); i++) printf("%d ", search_progress[i]);
+		for (int i = 0; i < search_progress.size(); i++) fprintf(stderr, "%d ", search_progress[i]);
 		assert(false);
 	}
 
@@ -349,8 +349,8 @@ void Master::collectStats() {
 }
 
 void Master::printStats() {
-	printf("%lld shared clauses\n", shared);
-	printf("%.1f avg shared len\n", (double) shared_len / shared);
+	fprintf(stderr, "%lld shared clauses\n", shared);
+	fprintf(stderr, "%.1f avg shared len\n", (double) shared_len / shared);
 }
 
 /*

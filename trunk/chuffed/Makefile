@@ -4,8 +4,10 @@ CPPFLAGS = -g -O3 -I . -I../
 CPPFLAGS += -Wall -Wno-non-virtual-dtor -Wno-unused-function -Wno-deprecated
 #CPPFLAGS += -DNDEBUG
 #CPPFLAGS += -pg
+EXLFLAGS = -lz
 
 # Work out the architecture.
+# XXX uname -m returns x86_64 for Mac OSX too! 
 ifeq ($(shell uname -m),x86_64)
 CPPFLAGS += -m64
 else
@@ -14,6 +16,12 @@ CPPFLAGS += -m64
 else
 CPPFLAGS += -m32
 endif
+endif
+
+# Mac OSX systems require the setting of standard C++ library for using TR1
+ifeq ($(shell uname -s),Darwin)
+CC = clang++
+CPPFLAGS += -stdlib=libstdc++
 endif
 
 ifeq ($(PARALLEL),true)
@@ -44,7 +52,7 @@ fzn_chuffed : $(FLATZINCOBJ) $(OBJS)
 	$(CC) $(CPPFLAGS) -o $@ $(FLATZINCOBJ) $(OBJS)
 
 $(EXAMPLES) : % : %.o $(OBJS)
-	$(CC) $(CPPFLAGS) -o $@ $@.o $(OBJS)
+	$(CC) $(CPPFLAGS) -o $@ $@.o $(OBJS) $(EXLFLAGS)
 
 clean :
 	rm -f fzn_chuffed $(EXAMPLES) $(OBJS) $(FLATZINCOBJ) $(EXAMPLEOBJ) $(DEPS) $(FLATZINCDEP) $(EXAMPLEDEP)

@@ -88,6 +88,27 @@ public:
 	int saved_clauses;
 	bool use_uiv;
 
+    // For circuit experiments
+    // for all of these, 'highest' level means highest level number, which is actually
+    // low in the search tree (recent).
+    int circuitalg;         // 1-check, 2-prevent, 3-all, 4-scc
+    int prevexpl;           // 1-equalities, 2-inside can't reach out
+    int checkexpl;          // 1-equalities, 2-inside can't reach out, 
+                            // 3-outside can't reach in, 4-smaller group can't reach bigger group, 
+                            // 5-bigger group can't reach smaller group
+    int checkfailure;       // 1-first, 2-smallest cycle, 3-largest cycle, 
+                            // 4-cycle with lowest ave level, 5-cycle with highest ave level, 
+                            // 6-cycle with lowest ave activity, 7-cycle with highest ave activity,
+                            // 8-last, 9-highest min level, 10-lowest max level
+    int checkevidence;      // for subcircuit: 1-first, 2-last, 3-high level, 4-low level
+    int preventevidence;    // 1-first, 2-last, 3-high level, 4-low level, 5-other chain, 6-random
+    int sccevidence;        // 1-first, 2-last, 3-high level, 4-low level, 6-random               
+    int sccoptions;         // 1-standard, 2-within, 3-root, 4-root+within
+    int rootSelection;      // 1-first non-fixed, 2-random unfixed, 3-end of shortest chain, 
+                            // 4-end of longest chain, 5- start of shortest chain (+ collapse),
+                            // 6-start of longest chain (+collapse), 7- first (even if fixed), 
+                            // 8-random (even if fixed), 9-largest domain, 10-all not self cycles
+
 	// for Nick's test (defaults probably work best in practice)
 	bool alldiff_cheat;              // if n vars over n vals, enforce that all vals are taken
 	bool alldiff_stage;              // if bounds or domain consistency, put value propagator too

@@ -83,7 +83,7 @@ inline bool Engine::constrain() {
 	}
 
 //	printf("opt_var = %d, opt_type = %d, best_sol = %d\n", opt_var->var_id, opt_type, best_sol);
-//	printf("opt_var min = %d, opt_var max = %d\n", opt_var->min, opt_var->max);
+//	printf("%% opt_var min = %d, opt_var max = %d\n", opt_var->getMin(), opt_var->getMax());
 
 	if (so.mip) mip->setObjective(best_sol);
 
@@ -272,7 +272,12 @@ RESULT Engine::search() {
 				continue;
 			}
 			
-			if (decisionLevel() == 0) topLevelCleanUp();
+			if (decisionLevel() == 0) {
+				topLevelCleanUp();
+				if (opt_var && so.verbosity >= 3) {
+					printf("%% root level bounds on objective: min %d max %d\n", opt_var->getMin(), opt_var->getMax());
+				}
+			}
 
 			DecInfo *di = NULL;
 			

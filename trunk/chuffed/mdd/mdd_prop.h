@@ -67,7 +67,7 @@ typedef struct {
 class MDDTemplate {
 public:
 
-    MDDTemplate(MDDTable& tab, MDD root, vec<int>& domain_sizes);
+    MDDTemplate(MDDTable& tab, _MDD root, vec<int>& domain_sizes);
      
     vec<int>& getDoms() { return _doms; }
 
@@ -88,7 +88,7 @@ public:
 template<int U = 0>
 class MDDProp : public Propagator {
 public:
-    MDDProp(MDDTemplate*, vec< IntView<U> >& _vars, bool _simple);
+    MDDProp(MDDTemplate*, vec< IntView<U> >& _vars, const MDDOpts& opts);
     ~MDDProp();
     
     bool fullProp(void);
@@ -132,7 +132,41 @@ public:
     }
 
 	// Propagate woken up parts
-	bool propagate();
+    bool propagate();
+
+    inline Lit get_val_lit(int v)
+    {
+#ifndef WEAKNOGOOD 
+      return intvars[val_entries[v].var].getLit(val_entries[v].val,1);
+#else
+      int eval = v < 0 ? -1*(v+2) : v; 
+      return intvars[val_entries[eval].var].getLit(val_entries[eval].val, v < 0 ? 0 : 1);
+#endif
+    }
+   
+    Clause* explain(Lit p, int inf)
+    {
+        vec<int> expl;
+        genReason(expl, inf);
+
+        if(opts.expl_strat == MDDOpts::E_KEEP)
+        {
+          vec<Lit> ps(expl.size());
+          for(int k = 1; k < expl.size(); k++)
+            ps[k] = get_val_lit(expl[k]);
+          ps[0] = p;
+
+          Clause* c = Clause_new(ps, true);
+          c->learnt = true;
+				  sat.addClause(*c);
+          return c;
+        } else {
+          Clause* r = Reason_new(expl.size());
+          for(int k = 1; k < expl.size(); k++)
+            (*r)[k] = get_val_lit(expl[k]);
+          return r;
+        }
+    }
 
 	// Clear intermediate states
 	void clearPropState() {
@@ -143,6 +177,9 @@ public:
 private:
     void clear_val(Value v);
     void kill_dom(unsigned int, inc_edge* e, vec<int>& kfa, vec<int>& kfb);
+
+    // Parameters
+    MDDOpts opts;
     
     // Data
     vec< IntView<U> > intvars;
@@ -155,7 +192,13 @@ private:
     vec<int> node_edges;
     
     vec<inc_edge> edges;
-    
+
+    double act_decay;
+    double act_inc;
+    vec<double> activity;
+    void bumpActivity(int val) { activity[val] += act_inc; }
+    void decayActivity(void) { act_inc *= act_decay; }
+
     bool simple;
     
     TrailedSet fixedvars;
@@ -166,4 +209,5 @@ private:
 template<int U>
 MDDProp<U>* MDDProp_new(MDDTemplate*, vec< IntView<U> >& vars);
 
+void mdd_decomp_dc(vec<IntVar*> xs, MDDTable& t, _MDD root);
 #endif

@@ -1,10 +1,21 @@
+#ifndef __SPARSE_SET_H__
+#define __SPARSE_SET_H__
 // U indicates whether to use FAST_FSET.
+#include <cassert>
+#include <cstdlib>
 
 template<int U = 0>
 class SparseSet {
-
 public:
-   SparseSet(unsigned int size) : dom(size), sparse(new unsigned int[size]), dense(new unsigned int[size]), members( 0 )
+   SparseSet(void) : dom(0), sparse(NULL), dense(NULL), members( 0 )
+   {
+
+   }
+
+   SparseSet(unsigned int size) : dom(size),
+      sparse((unsigned int*) malloc(size*sizeof(unsigned int))),
+      dense((unsigned int*) malloc(size*sizeof(unsigned int))),
+      members( 0 )
    {
       if( U&1 )
       {
@@ -18,11 +29,13 @@ public:
    }
 
    ~SparseSet() {
-      delete[] sparse;
-      delete[] dense;  
+      if( sparse )
+         free(sparse);
+      if( dense )
+         free(dense);  
    }
 
-   bool elem(unsigned int value) {
+   bool elem(unsigned int value) const {
       if( U&1 )
       {
          return (sparse[value] < members);
@@ -67,7 +80,7 @@ public:
       members = 0;
    }
 
-   unsigned int pos(unsigned int val)
+   unsigned int pos(unsigned int val) const
    {
       assert( elem(val) );
       return sparse[val];
@@ -77,9 +90,32 @@ public:
       assert(index < members);
       return dense[index];
    }
+    
+   void growTo(unsigned int sz)
+   {
+      if( sz > dom )
+      {
+         sparse = (unsigned int*) realloc(sparse,sizeof(unsigned int)*sz); 
+         dense = (unsigned int*) realloc(dense,sizeof(unsigned int)*sz);
+
+         if( U&1 )
+         {
+            assert( members == 0 );
+            for(; dom < sz; dom++ )
+            {
+                sparse[dom] = dom;
+                dense[dom] = dom;
+            }
+         }
+      }
+   }
 
    unsigned int size(void) {
       return members;
+   }
+   
+   unsigned int domain(void) {
+      return dom;
    }
        
 protected:
@@ -89,25 +125,6 @@ protected:
    unsigned int members;
 };
 
-#if 0
-class TimedSet : public SparseSet {
-public:
-   TimedSet(int);
-
-   void step_time(void);
-   void unstep_time(void);
-   void set_time(int);
-   void clear_to_time(int);
-   
-   int get_time(void);
-
-protected:
-   vec<int> levels;
-   int current_time;
-}
-#endif
-
-// template< int U = 0 >
 class TrailedSet : public SparseSet<0> {
 public:
    TrailedSet(int sz) : SparseSet<0>( sz )
@@ -118,28 +135,38 @@ public:
    bool insert(int value)
    {
        // Assumes not FFSET.
-#if 0
-      if( U&1 )
-      {
-         int old_dense = sparse[value];
-         int lost_val = dense[members];
+      assert( !elem(value) );
 
-         sparse[value] = members;
-         dense[members] = value;
-
-         sparse[lost_val] = old_dense;
-         dense[old_dense] = lost_val;
-      } else {
-#endif
-        assert( !elem(value) );
-
-        sparse[value] = members;
-        dense[members] = value;
-#if 0
-      }
-#endif
+      sparse[value] = members;
+      dense[members] = value;
+      
       trailChange(members,members+1);
       
       return true;
    }
 };
+
+// Variant of a trailed sparse set which
+// only trails at the end of a series of operations.
+class DeferredSet : public SparseSet<0> {
+public:
+  DeferredSet(int sz) : SparseSet<0>( sz )
+  {
+
+  }
+  
+  // Ensure members is given the correct value.
+  inline void refresh(void)
+  {
+    members = stored; 
+  }
+
+  inline void commit(void)
+  {
+    if(stored != members)
+      trailChange(stored, members);
+  }
+protected:
+  unsigned int stored;
+};
+#endif

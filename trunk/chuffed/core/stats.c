@@ -42,6 +42,8 @@ void Engine::printStats() {
 		fprintf(stderr, "\n");
 		sat.printStats();
 		if (so.mip) mip->printStats();
+		for (int i = 0; i < engine.propagators.size(); i++)
+			engine.propagators[i]->printStats();
 	}
 	else {
 		if (engine.opt_var != NULL) fprintf(stderr, "%d,", best_sol);

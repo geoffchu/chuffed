@@ -67,7 +67,7 @@ public:
 			}
 			if (x[i]->setMinNotR(b)) {
 				if (engine.decisionLevel() == 0) {
-					fprintf(stderr, "prop_id = %d, var_id = %d, i = %d, b = %d\n", prop_id, x[i]->var_id, i, b);
+					fprintf(stderr, "%% prop_id = %d, var_id = %d, i = %d, b = %d\n", prop_id, x[i]->var_id, i, b);
 				}
 				if (!x[i]->setMin(b, createReason(i, e))) return false;
 			}

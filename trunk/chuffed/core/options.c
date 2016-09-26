@@ -66,6 +66,16 @@ Options::Options() :
 	, saved_clauses(0)
 	, use_uiv(false)
 
+	, circuitalg(3)
+	, prevexpl(1)
+	, checkexpl(2)
+	, checkfailure(4)
+	, checkevidence(4)
+	, preventevidence(1)
+	, sccevidence(1)
+    , sccoptions(4)
+    , rootSelection(1)
+
 	, alldiff_cheat(true)
 	, alldiff_stage(true)
 {}
@@ -149,6 +159,16 @@ void parseOptions(int& argc, char**& argv) {
 		parseIntArg(saved_clauses)
 		parseBoolArg(use_uiv)
 
+        parseIntArg(circuitalg)
+        parseIntArg(prevexpl)
+        parseIntArg(checkexpl)
+        parseIntArg(checkfailure)
+        parseIntArg(checkevidence)
+        parseIntArg(sccevidence)
+        parseIntArg(preventevidence)
+        parseIntArg(sccoptions)
+        parseIntArg(rootSelection)
+    
 		parseBoolArg(alldiff_cheat)
 		parseBoolArg(alldiff_stage)
 		

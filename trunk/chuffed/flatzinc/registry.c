@@ -25,6 +25,7 @@
 #include <chuffed/core/propagator.h>
 #include <chuffed/ldsb/ldsb.h>
 #include <chuffed/globals/mddglobals.h>
+#include <chuffed/mdd/opts.h>
 
 namespace FlatZinc {
 
@@ -95,6 +96,24 @@ namespace FlatZinc {
 				}
 			}
 		}
+
+    inline MDDOpts getMDDOpts(AST::Node* ann)
+    {
+      MDDOpts mopts;
+      if(ann)
+      {
+        if(ann->hasCall("mdd"))
+        {
+          AST::Array* args(ann->getCall("mdd")->getArray());
+          for(unsigned int i = 0; i < args->a.size(); i++)
+          {
+            if (AST::Atom* at = dynamic_cast<AST::Atom*>(args->a[i]))
+              mopts.parse_arg(at->id);
+          }
+        }
+      }
+      return mopts;      
+    }
 
 		BoolView getBoolVar(AST::Node* n) {
 			if (n->isBoolVar()) {
@@ -510,10 +529,10 @@ namespace FlatZinc {
 					ts.last().push(tuples[i*noOfVars+j]);
 				}
 			}
-			if( !so.mdd )
-                table(x, ts);
-            else
-                mdd_table(x, ts);
+			if (ann->hasAtom("mdd") || ann->hasCall("mdd"))
+				mdd_table(x, ts, getMDDOpts(ann));
+      else
+				table(x, ts);
 		}
 
 		void p_regular(const ConExpr& ce, AST::Node* ann) {
@@ -542,11 +561,58 @@ namespace FlatZinc {
 				for (unsigned int i = 0; i < sl->s.size(); i++) f.push(sl->s[i]);
 			}
             
-            if( !so.mdd )
-                regular(iv, q, s, d, q0, f);
-            else
-                mdd_regular(iv, q, s, d, q0, f);
+			if(ann->hasAtom("mdd"))
+				mdd_regular(iv, q, s, d, q0, f, true, getMDDOpts(ann));
+      else
+				regular(iv, q, s, d, q0, f);
 		}
+
+		void p_cost_regular(const ConExpr& ce, AST::Node* ann) {
+			vec<IntVar*> iv; arg2intvarargs(iv, ce[0]);
+			int q = ce[1]->getInt();
+			int s = ce[2]->getInt();
+			vec<int> d_flat; arg2intargs(d_flat, ce[3]);
+			vec<int> w_flat; arg2intargs(w_flat, ce[4]);
+			int q0 = ce[5]->getInt();
+
+			assert(d_flat.size() == q*s);
+
+			vec<vec<int> > d;
+			vec<vec<int> > w;
+      // State 0 is garbage
+      d.push();
+      for(int j = 0; j <= s; j++)
+      {
+        d.last().push(0);
+        w.last().push(0);
+      }
+      // Fill in the remaining transitions
+			for (int i = 0; i < q; i++) {
+				d.push();
+        w.push();
+        // Values start from 1, so [x = 0] goes to garbage.
+        d.last().push(0);
+        w.last().push(0);
+				for (int j = 0; j < s; j++) {
+					d.last().push(d_flat[i*s+j]);
+          w.last().push(w_flat[i*s+j]);
+				}
+			}
+
+			// Final states
+			AST::SetLit* sl = ce[6]->getSet();
+			vec<int> f;
+			if (sl->interval) {
+				for (int i = sl->min; i <= sl->max; i++) f.push(i);
+			} else {
+				for (unsigned int i = 0; i < sl->s.size(); i++) f.push(sl->s[i]);
+			}
+      
+      IntVar* cost = getIntVar(ce[7]);
+
+      wmdd_cost_regular(iv, q+1, s+1, d, w, q0, f, cost, getMDDOpts(ann));
+		}
+
 
 		void p_disjunctive(const ConExpr& ce, AST::Node* ann) {
 			vec<IntVar*> s; arg2intvarargs(s, ce[0]);
@@ -560,6 +626,49 @@ namespace FlatZinc {
 			vec<int> p; arg2intargs(p, ce[2]);
 			int limit = ce[3]->getInt();
 			cumulative(s, d, p, limit);
+		}
+
+        void p_cumulative2(const ConExpr& ce, AST::Node* ann) {
+            vec<IntVar*> s; arg2intvarargs(s, ce[0]);
+            vec<IntVar*> d; arg2intvarargs(d, ce[1]);
+            vec<IntVar*> r; arg2intvarargs(r, ce[2]);
+            cumulative2(s, d, r, getIntVar(ce[3]));
+        }
+
+		void p_cumulative_cal(const ConExpr& ce, AST::Node* ann) {
+			vec<IntVar*> s; arg2intvarargs(s, ce[0]);
+			vec<IntVar*> d; arg2intvarargs(d, ce[1]);
+			vec<IntVar*> p; arg2intvarargs(p, ce[2]);
+			
+			int index1 = ce[4]->getInt();
+			int index2 = ce[5]->getInt();
+			
+			vec<int> cal_in; arg2intargs(cal_in, ce[6]);
+			
+			vec<vec<int> > cal;
+			for (int i = 0; i < index1; i++) {
+				cal.push();
+				for (int j = 0; j < index2; j++) {
+					cal.last().push(cal_in[i*index2+j]);
+				}
+			}
+
+			vec<int> taskCal; arg2intargs(taskCal, ce[7]);
+			int rho = ce[8]->getInt();
+            int resCal = ce[9]->getInt();
+			cumulative_cal(s, d, p, getIntVar(ce[3]), cal, taskCal, rho, resCal);
+		}
+
+		void p_circuit(const ConExpr& ce, AST::Node* ann) {
+			vec<IntVar*> x; arg2intvarargs(x, ce[0]);
+			int index_offset = ce[1]->getInt();
+            circuit(x, index_offset);
+		}
+
+		void p_subcircuit(const ConExpr& ce, AST::Node* ann) {
+			vec<IntVar*> x; arg2intvarargs(x, ce[0]);
+			int index_offset = ce[1]->getInt();
+            subcircuit(x, index_offset);
 		}
 
 		void p_minimum(const ConExpr& ce, AST::Node* ann) {
@@ -908,8 +1017,13 @@ namespace FlatZinc {
 				registry().add("inverse_offsets", &p_inverse_offsets);
 				registry().add("table_int", &p_table_int);
 				registry().add("regular", &p_regular);
-				registry().add("disjunctive", &p_disjunctive);
-				registry().add("chuffed_cumulative", &p_cumulative); // TODO Different naming
+				registry().add("cost_regular", &p_cost_regular);
+				registry().add("chuffed_disjunctive_strict", &p_disjunctive);
+				registry().add("chuffed_cumulative", &p_cumulative);
+				registry().add("chuffed_cumulative_vars", &p_cumulative2);
+				registry().add("chuffed_cumulative_cal", &p_cumulative_cal);
+                registry().add("chuffed_circuit", &p_circuit);
+                registry().add("chuffed_subcircuit", &p_subcircuit);
 				registry().add("minimum_int", &p_minimum);
 				registry().add("maximum_int", &p_maximum);
 				registry().add("lex_less_int", &p_lex_less);

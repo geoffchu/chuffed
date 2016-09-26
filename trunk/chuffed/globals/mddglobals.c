@@ -3,8 +3,12 @@
 #include <chuffed/core/propagator.h>
 #include <chuffed/globals/mddglobals.h>
 
-#include <chuffed/mdd/MDD.h>
 #include <chuffed/mdd/mdd_prop.h>
+#include <chuffed/mdd/MDD.h>
+#include <chuffed/mdd/opts.h>
+#include <chuffed/mdd/weighted_dfa.h>
+#include <chuffed/mdd/wmdd_prop.h>
+// #include <chuffed/mdd/case.h>
 
 typedef struct {
     int state;
@@ -12,42 +16,60 @@ typedef struct {
     int dest;
 } dfa_trans;
 
+static void addMDDProp(vec<IntVar*>& x, MDDTable& tab, _MDD m, const MDDOpts& mopts);
 
-static void addMDDProp(vec<IntVar*>& x, MDDTable& tab, MDD m, bool simple=false);
+// _MDD fd_regular(MDDTable& tab, int n, int nstates, vec< vec<int> >& transition, int q0, vec<int>& accepts, bool offset = true);
+static _MDD mdd_table(MDDTable& mddtab, int arity, vec<int>& doms, vec< vec<int> >& entries, bool is_pos);
 
-static MDD fd_regular(MDDTable& tab, int dom, int n, int nstates, vec< vec<int> >& transition, vec<int>& accepts);
-static MDD mdd_table(MDDTable& mddtab, int arity, vec<int>& doms, vec< vec<int> >& entries, bool is_pos);
+void addMDD(vec<IntVar*>& x, MDD m, const MDDOpts& mdd_opts)
+{
+  if(m.val == m.table->ttt().val)
+    return;
 
-static void addMDDProp(vec<IntVar*>& x, MDDTable& tab, MDD m, bool simple)
+  addMDDProp(x, *(m.table), m.val, mdd_opts);
+  /*
+  if(mdd_opts.decomp == MDDOpts::D_PROP)
+  {
+    addMDDProp(x, *(m.table), m.val, mdd_opts);
+  } else {
+    mdd_decomp_dc(x, *(m.table), m.val);
+  }
+  */
+}
+
+static void addMDDProp(vec<IntVar*>& x, MDDTable& tab, _MDD m, const MDDOpts& mopts)
 {
    vec<int> doms;
    vec< IntView<> > w;
 
+   vec<intpair> bounds;
    for (int i = 0; i < x.size(); i++)
    {
+      bounds.push(intpair(x[i]->getMin(), x[i]->getMax()));
       doms.push(x[i]->getMax()+1);
       // assert( x[i]->getMin() == 0 );
    }
+//   m = tab.bound(m, bounds);
+//   m = tab.expand(0, m);
 	
    for (int i = 0; i < x.size(); i++) x[i]->specialiseToEL();
    for (int i = 0; i < x.size(); i++) w.push(IntView<>(x[i],1,0));
    
    MDDTemplate* templ = new MDDTemplate(tab, m, doms);
 
-   new MDDProp<0>(templ, w, simple); 
+   new MDDProp<0>(templ, w, mopts); 
 }
 
 // x: Vars | q: # states | s: alphabet size | d[state,symbol] -> state | q0: start state | f: accepts
 // States range from 1..q (0 is reserved as dead)
 // 
-void mdd_regular(vec<IntVar*>& x, int q, int s, vec<vec<int> >& d, int q0, vec<int>& f) {
-//   NOT_SUPPORTED;
-   MDDTable tab(x.size(),s); 
-   MDD m( fd_regular(tab, s+1, x.size(),q+1, d, f) );  
-   addMDDProp(x, tab, m);
+void mdd_regular(vec<IntVar*>& x, int q, int s, vec<vec<int> >& d, int q0, vec<int>& f, bool offset, const MDDOpts& mopts) {
+   MDDTable tab(x.size()); 
+   _MDD m( fd_regular(tab, x.size(), q+1, d, q0, f, offset) );  
+   addMDDProp(x, tab, m, mopts);
 }
 
-void mdd_table(vec<IntVar*>& x, vec<vec<int> >& t) {
+void mdd_table(vec<IntVar*>& x, vec<vec<int> >& t, const MDDOpts& mopts) {
    vec<int> doms;
    
    int maxdom = 0; 
@@ -60,23 +82,22 @@ void mdd_table(vec<IntVar*>& x, vec<vec<int> >& t) {
       if( (x[i]->getMax() + 1) > maxdom )
          maxdom = x[i]->getMax() + 1;
    }
-   
-   MDDTable tab(x.size(),maxdom); 
+   MDDTable tab(x.size()); 
    
    // Assumes a positive table. 
-   MDD m( mdd_table(tab, x.size(), doms, t, true) );  
+   _MDD m( mdd_table(tab, x.size(), doms, t, true) );  
    
 //   tab.print_mdd_tikz(m);
 
-   addMDDProp(x, tab, m);
+   addMDDProp(x, tab, m, mopts);
 }
 
 //MDD mdd_table(MDDTable& mddtab, int arity, vec<int>& doms, vec< std::vector<unsigned int> >& entries, bool is_pos)
-MDD mdd_table(MDDTable& mddtab, int arity, vec<int>& doms, vec< vec<int> >& entries, bool is_pos)
+_MDD mdd_table(MDDTable& mddtab, int arity, vec<int>& doms, vec< vec<int> >& entries, bool is_pos)
 {
    assert( doms.size() == arity );
       
-   MDD table = MDDFALSE;
+   _MDD table = MDDFALSE;
 
    for( int i = 0; i < entries.size(); i++ )
    {
@@ -92,19 +113,19 @@ MDD mdd_table(MDDTable& mddtab, int arity, vec<int>& doms, vec< vec<int> >& entr
 
 //      mddtab.print_mdd_tikz(table);
 
-      table = mddtab.mdd_not(vdoms,table);
+      table = mddtab.mdd_not(table);
       
    }
 
    return table;
 }
 
-MDD fd_regular(MDDTable& tab, int dom, int n, int nstates, vec< vec<int> >& transition, vec<int>& accepts)
+_MDD fd_regular(MDDTable& tab, int n, int nstates, vec< vec<int> >& transition, int q0, vec<int>& accepts, bool offset)
 {
-   std::vector< std::vector<MDD> > states;
+   std::vector< std::vector<_MDD> > states;
    for( int i = 0; i < nstates; i++ )
    {
-      states.push_back(std::vector<MDD>());
+      states.push_back(std::vector<_MDD>());
       states[i].push_back(MDDFALSE);
    }
 
@@ -119,31 +140,45 @@ MDD fd_regular(MDDTable& tab, int dom, int n, int nstates, vec< vec<int> >& tran
    {
       for( int i = 0; i < nstates-1; i++ )
       {
-#if 0
-         MDD cstate( MDDFALSE );
-         for( int k = 0; k < transition.size(); k++ )
-         {
-            if( transition[k].state == i )
-               cstate = tab.mdd_or( cstate,
-                   tab.mdd_and( tab.mdd_vareq(j,transition[k].value), states[transition[k].dest][prevlevel] ) );
-         }
-         states[i].push_back(cstate);
-#else
          std::vector<edgepair> cases;
          for( int k = 0; k < transition[i].size(); k++ )
          {
            if( transition[i][k] > 0 )
-               cases.push_back(edgepair(k+1,states[transition[i][k]-1][prevlevel]));
+               cases.push_back(edgepair(offset ? k+1 : k,states[transition[i][k]-1][prevlevel]));
          }
          states[i].push_back(tab.mdd_case(j,cases));
-#endif
       }
       prevlevel++;
    }
    
-   MDD out( states[0][states[0].size()-1] );
+   _MDD out( states[q0-1][states[0].size()-1] );
    
-//   std::cout << out << std::endl;
-//   tab.print_mdd_tikz(out);
    return out;
+}
+
+// x: Vars | q: # states | s: alphabet size | d[state,symbol] -> state | q0: start state | f: accepts
+// States range from 1..q (0 is reserved as dead)
+// offset -> alphabet symbols are 1..s
+//   (0..s-1 otherwise)
+// 
+void wmdd_cost_regular(vec<IntVar*>& x, int q, int s, vec<vec<int> >& d, vec<vec<int> >& w,
+    int q0, vec<int>& f, IntVar* cost, const MDDOpts& mopts)
+{
+  vec<WDFATrans> T; 
+  // Construct the weighted transitions.
+  for(int qi = 0; qi < q; qi++)
+  {
+    vec<int>& d_q(d[q]);
+    vec<int>& w_q(w[q]);
+
+    for(int vi = 0; vi < s; vi++)
+    {
+      WDFATrans t = { d_q[vi], w_q[vi] };
+      T.push(t);
+    }
+  }
+
+  EVLayerGraph g;
+  EVLayerGraph::NodeID root = wdfa_to_layergraph(g, x.size(), s, (WDFATrans*) T, q, f);
+  evgraph_to_wmdd(x, cost, g, root, mopts);
 }

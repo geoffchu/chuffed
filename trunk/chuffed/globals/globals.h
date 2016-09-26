@@ -26,11 +26,21 @@ void inverse(vec<IntVar*>& x, vec<IntVar*>& y, int o1 = 0, int o2 = 0, ConLevel 
 
 // circuit.c
 
-void circuit(vec<IntVar*>& x);
+void circuit(vec<IntVar*>& x, int offset = 0);
+void path(vec<IntVar*>& x);
+
+// subcircuit.c
+
+void subcircuit(vec<IntVar*>& x, int offset = 0);
+void subpath(vec<IntVar*>& _x);
 
 // linear-bool.c
 
 void bool_linear(vec<BoolView>& x, IntRelType t, IntVar* y);
+
+// linear-bool-decomp.c
+void bool_linear_decomp(vec<BoolView>& x, IntRelType t, int k);
+void bool_linear_decomp(vec<BoolView>& x, IntRelType t, IntVar* y);
 
 // minimum.c
 
@@ -52,6 +62,8 @@ void disjunctive(vec<IntVar*>& s, vec<int>& d);
 // cumulative.c
 
 void cumulative(vec<IntVar*>& s, vec<int>& d, vec<int>& r, int b);
+void cumulative2(vec<IntVar*>& s, vec<IntVar*>& d, vec<IntVar*>& r, IntVar* b);
+void cumulative_cal(vec<IntVar*>& s, vec<IntVar*>& d, vec<IntVar*>& r, IntVar* limit, vec<vec<int> >& cal, vec<int>& taskCal, int rho, int resCal);
 
 // lex.c
 
